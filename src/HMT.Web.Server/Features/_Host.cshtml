@@ -1,0 +1,14 @@
+﻿@page "/"
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@namespace HMT.Web.Server.Features
+@using HMT.Web.Server.Areas.Identity
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "./Shared/Layout/_Layout";
+    var tokens = new InitialApplicationState
+    {
+        XsrfToken = Xsrf.GetAndStoreTokens(HttpContext).RequestToken
+    };
+}
+
+<component type="typeof(App)" param-InitialState = "tokens" render-mode="ServerPrerendered" />

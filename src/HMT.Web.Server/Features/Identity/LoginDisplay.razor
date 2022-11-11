@@ -1,0 +1,37 @@
+﻿@*<AuthorizeView>
+    <Authorized>
+        <a href="#">Hello, @context.User.Identity?.Name!</a>
+        <form method="post" action="#">
+            <button type="submit" class="nav-link btn btn-link">Log out</button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <a href="#">Register</a>
+        <a href="#">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>*@
+
+@*<span>Hi, User</span>
+<button type="button" class="btn btn-link">Log Out</button>*@
+
+@*Added by Identity Scaffolder*@
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+@inject TokenProvider TokenProvider
+
+<AuthorizeView>
+    <Authorized>
+        <a href="Identity/Account/Manage/Index">
+            Hi, @context.User.Identity.Name!
+        </a>
+        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+            <button class="nav-link btn btn-link" type="submit">Logout</button>
+            <input name="__RequestVerificationToken" type="hidden" 
+                value="@TokenProvider.XsrfToken">
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Identity/Account/Register">Register</a>
+        <a href="Identity/Account/Login">Login</a>
+    </NotAuthorized>
+</AuthorizeView>

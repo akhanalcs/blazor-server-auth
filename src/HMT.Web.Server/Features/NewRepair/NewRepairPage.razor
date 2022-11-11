@@ -1,0 +1,23 @@
+﻿@page "/repairs/new"
+
+<h3>NewRepairPage</h3>
+
+<EditForm Model="_repairModel"> @*OnValidSubmit="HandleFormSubmit">*@
+    <DataAnnotationsValidator />
+
+    <fieldset>
+        <div>
+            <label for="SomeUniqueThingInDb">Some unique thing</label>
+            <InputText id="SomeUniqueThingInDb" type="text" @bind-Value="_repairModel.SomeUniqueThingInDb" />
+            <ValidationMessage For="() => _repairModel.SomeUniqueThingInDb" />
+        </div>
+
+        <div>
+            <label for="Reason">Reason</label>
+            <InputTextArea id="Reason" type="text" @bind-Value="_repairModel.Reason" />
+            <ValidationMessage For="() => _repairModel.Reason" />
+        </div>
+
+        <button type="submit">Save</button>
+    </fieldset>
+</EditForm>
