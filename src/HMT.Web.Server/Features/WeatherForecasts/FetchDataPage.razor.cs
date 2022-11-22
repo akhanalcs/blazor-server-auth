@@ -1,9 +1,7 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Components;
 using HMT.Web.Server.Data;
-using HMT.Web.Server.Interfaces;
-using HMT.Web.Server.Models.Entities;
+using HMT.Web.Server.Models;
 
 namespace HMT.Web.Server.Features.WeatherForecasts
 {
@@ -22,25 +20,17 @@ namespace HMT.Web.Server.Features.WeatherForecasts
             public DateTime StartDate { get; set; }
         }
 
-        public class Validator : AbstractValidator<Query>
-        {
-            public Validator()
-            {
-                RuleFor(m => m.StartDate).NotNull();
-            }
-        }
-
         public class Handler : IRequestHandler<Query, IEnumerable<WeatherForecast>>
         {
-            private readonly IInMemoryDatabase _db;
-            public Handler(IInMemoryDatabase db)
+            private readonly WeatherForecastService _wfs;
+            public Handler(WeatherForecastService wfs)
             {
-                _db = db;
+                _wfs = wfs;
             }
 
             public async Task<IEnumerable<WeatherForecast>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _db.GetWeatherForecasts(request.StartDate);
+                return await _wfs.GetWeatherForecasts(request.StartDate);
             }
         }
     }

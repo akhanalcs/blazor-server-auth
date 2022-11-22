@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using HMT.Web.Server.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HMT.Web.Server.Areas.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using HMT.Web.Server.Models;
 
 namespace HMT.Web.Server.Data
 {
@@ -14,6 +14,7 @@ namespace HMT.Web.Server.Data
     {
         public HMTDbContext(DbContextOptions<HMTDbContext> options) : base(options) { }
 
+        // Existing DbSet before I ran Identity Scaffolder
         public DbSet<RepairOrder> RepairOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

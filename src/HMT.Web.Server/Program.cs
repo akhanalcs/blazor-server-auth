@@ -2,11 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using HMT.Web.Server.Data;
 using MediatR;
-using FluentValidation;
-using HMT.Web.Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using HMT.Web.Server.Services;
-using Microsoft.AspNetCore.Identity;
 using HMT.Web.Server.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Services we're adding - start
 
-builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddValidatorsFromAssemblyContaining(typeof(Program));
+builder.Services.AddMediatR(typeof(Program)); // Nothing fancy is being done here with MediatR, just being used here as POC to fetch weather forecasts using CQRS pattern. Check it out. It's VERY simple.
 
 builder.Services.AddDbContext<HMTDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HMTConnection")));
@@ -26,15 +21,11 @@ builder.Services.AddDefaultIdentity<HMTUser>(options => options.SignIn.RequireCo
 
 builder.Services.AddScoped<TokenProvider>();
 
-builder.Services.AddSingleton<IInMemoryDatabase, InMemoryDatabase>();
+builder.Services.AddSingleton<WeatherForecastService>();
 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-// builder.Host.UseSerilogLoggingSetup();
 // Services we're adding - end
 
-builder.Services.AddRazorPages(options => options.RootDirectory = "/Features");
+builder.Services.AddRazorPages(options => options.RootDirectory = "/Features"); // Added this to rename Pages to Features
 builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();

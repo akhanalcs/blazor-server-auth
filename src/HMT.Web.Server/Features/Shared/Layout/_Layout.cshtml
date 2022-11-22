@@ -2,6 +2,8 @@
 @namespace HMT.Web.Server.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using HMT.Web.Server.Features.Shared.Layout.NavMenu
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject ICompositeViewEngine Engine
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +29,9 @@
                 var result = Engine.FindView(ViewContext, "_LoginPartial", 
                     isMainPage: false);
             }
-            @if (result.Success)
+            @if (true)
             {
-                await Html.RenderPartialAsync("_LoginPartial");
+                await Html.RenderPartialAsync("_LoginPartial.cshtml");
             }
             else
             {

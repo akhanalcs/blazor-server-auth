@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HMT.Web.Server.Models.Entities
+namespace HMT.Web.Server.Models
 {
     public class RepairOrder
     {

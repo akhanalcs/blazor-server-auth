@@ -1,5 +1,4 @@
-﻿using HMT.Web.Server.Interfaces;
-using HMT.Web.Server.Models.Entities;
+﻿using HMT.Web.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HMT.Web.Server.Data
 {
-    public class InMemoryDatabase : IInMemoryDatabase
+    public class WeatherForecastService
     {
         private static readonly string[] Summaries = new[]
         {
@@ -26,25 +25,6 @@ namespace HMT.Web.Server.Data
             });
 
             return forecasts;
-        }
-
-        public async Task<IEnumerable<RepairOrder>> GetRepairOrders()
-        {
-            return new RepairOrder[] {
-                new RepairOrder
-                {
-                    OrderId = 1,
-                    SomeUniqueThingInDb = "Ayo 1",
-                    Reason = "Reason 1"
-                },
-                new RepairOrder
-                {
-                    OrderId = 2,
-                    SomeUniqueThingInDb = "Ayo 2",
-                    Reason = "Reason 2"
-                }
-            }
-            .ToArray();
         }
     }
 }

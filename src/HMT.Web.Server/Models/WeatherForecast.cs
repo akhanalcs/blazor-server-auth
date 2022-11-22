@@ -1,4 +1,4 @@
-namespace HMT.Web.Server.Models.Entities
+namespace HMT.Web.Server.Models
 {
     public class WeatherForecast
     {
