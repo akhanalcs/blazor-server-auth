@@ -14,9 +14,6 @@ namespace HMT.Web.Server.Data
     {
         public HMTDbContext(DbContextOptions<HMTDbContext> options) : base(options) { }
 
-        // Existing DbSet before I ran Identity Scaffolder
-        public DbSet<RepairOrder> RepairOrders { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
