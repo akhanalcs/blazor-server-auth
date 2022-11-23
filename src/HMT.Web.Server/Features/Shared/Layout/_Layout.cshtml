@@ -2,8 +2,7 @@
 @namespace HMT.Web.Server.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using HMT.Web.Server.Features.Shared.Layout.NavMenu
-@using Microsoft.AspNetCore.Mvc.ViewEngines
-@inject ICompositeViewEngine Engine
+@using HMT.Web.Server.Features.Identity
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,44 +16,37 @@
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
-    <div class="sidebar" style="float:left">
-        <component type="typeof(NavMenu_IdentityLayout)" 
-            render-mode="ServerPrerendered" />
-    </div>
-
-    <div class="main" style="padding-left:250px">
-        <div class="top-row px-4">
-            @{
-                
-                var result = Engine.FindView(ViewContext, "_LoginPartial", 
-                    isMainPage: false);
-            }
-            @if (true)
-            {
-                await Html.RenderPartialAsync("_LoginPartial.cshtml");
-            }
-            else
-            {
-                throw new InvalidOperationException("The default Identity UI " +
-                    "layout requires a partial view '_LoginPartial'.");
-            }
-            <a href="https://learn.microsoft.com/aspnet/" target="_blank">About</a>
+    <div class="page">
+        <div class="sidebar">
+            <component type="typeof(NavMenu)" render-mode="ServerPrerendered" />
         </div>
 
-        <div class="content px-4">
-            @RenderBody()
-        </div>
-    </div>
+        <main>
+            <div class="top-row px-4 logindisplay">
+                <component type="typeof(LoginDisplay)" render-mode="ServerPrerendered" />
+            </div>
 
-    <div id="blazor-error-ui">
-        <environment include="Staging,Production">
-            An error has occurred. This application may no longer respond until reloaded.
-        </environment>
-        <environment include="Development">
-            An unhandled exception has occurred. See browser dev tools for details.
-        </environment>
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
+            <article class="content px-4">
+                @RenderBody()
+                <div id="blazor-error-ui">
+                    <environment include="Staging,Production">
+                        An error has occurred. This application may no longer respond until reloaded.
+                    </environment>
+                    <environment include="Development">
+                        An unhandled exception has occurred. See browser dev tools for details.
+                    </environment>
+                    <a href="" class="reload">Reload</a>
+                    <a class="dismiss">🗙</a>
+                </div>
+            </article>
+
+            <div class="bottom-row px-4">
+                <a href="">
+                    <img src="/images/logo-black.png" width="40"/>
+                    <span class="fs-4">HMT</span>
+                </a>
+            </div>
+        </main>
     </div>
 
     <script src="~/Identity/lib/jquery/dist/jquery.js"></script>

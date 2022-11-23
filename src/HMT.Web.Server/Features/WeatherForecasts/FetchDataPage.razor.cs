@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using HMT.Web.Server.Data;
-using HMT.Web.Server.Models;
 
 namespace HMT.Web.Server.Features.WeatherForecasts
 {

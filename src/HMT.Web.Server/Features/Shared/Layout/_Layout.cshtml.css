@@ -1,0 +1,138 @@
+﻿.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /*Code I added - Start*/
+    min-height: 100vh;
+    /*Code I added - End*/
+}
+
+main {
+    flex: 1;
+}
+
+.sidebar {
+    /*background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/ /*Original code*/
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #000000 70%);
+}
+
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    /*    max-height: 3.5rem;*/
+    display: flex;
+    align-items: center;
+}
+
+    .top-row ::deep a, .top-row .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+/*Code I added - Start*/
+.bottom-row {
+    background-color: #f7f7f7;
+    border-top: 1px solid #d6d5d5;
+    height: 3.5rem;
+    /*    max-height: 3.5rem;*/
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    /*    left: 0;*/
+    bottom: 0;
+    width: 100vw;
+}
+
+    /*Select all a elements where parent is a .bottom-row*/
+    .bottom-row > a {
+        display: flex;
+        color: rgb(33, 37, 41);
+        /*color and text-decor used to not show it as link*/
+        text-decoration: none;
+        /*fontsize is the same copied from navbar-brand style inside NavMenu.razor.css*/
+        font-size: 1.1rem;
+    }
+
+/*Optionally this selector will also work: main article.content*/
+main > .content {
+    /*height: calc(100vh - 10.5rem);
+    max-height: calc(100vh - 10.5rem);*/
+    overflow-y: auto;
+    margin-bottom: 3.5rem;
+}
+/*Code I added - End*/
+
+/*less than or equal to*/
+/*Max-width is the maximum width at which a style will continue to be applied. 
+After that, the style will STOP being applied.*/
+@media (max-width: 640.98px) {
+    .top-row:not(.logindisplay) {
+        display: none;
+    }
+
+    .top-row.logindisplay {
+        justify-content: space-between;
+    }
+
+    .top-row a, .top-row .btn-link {
+        margin-left: 0;
+    }
+
+    /*Code I added - Start*/
+    .bottom-row {
+        margin-left: 0;
+    }
+    /*Code I added - End*/
+}
+
+/*greater than or equal to*/
+/*Min-width is the minimum width at which a style will START to be applied*/
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        /*Code I added - Start*/
+        /*        max-height: 100vh;
+        overflow-y: auto;*/
+        /*Code I added - End*/
+        position: sticky;
+        top: 0;
+    }
+
+    /*Code I added - Start*/
+    main > .content {
+        /*height: calc(100vh - 7rem);
+        max-height: calc(100vh - 7rem);*/
+        margin-bottom: 3.5rem;
+    }
+
+    .bottom-row {
+        left: 250px;
+        width: calc(100vw - 250px);
+        justify-content: flex-end;
+    }
+    /*Code I added - End*/
+
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row, article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}

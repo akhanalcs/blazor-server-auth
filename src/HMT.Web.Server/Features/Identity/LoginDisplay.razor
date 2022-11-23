@@ -15,23 +15,29 @@
 <button type="button" class="btn btn-link">Log Out</button>*@
 
 @*Added by Identity Scaffolder*@
+
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
 @inject TokenProvider TokenProvider
 
-<AuthorizeView>
-    <Authorized>
-        <a href="Identity/Account/Manage/Index">
-            Hi, @context.User.Identity.Name!
-        </a>
-        <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
-            <button class="nav-link btn btn-link" type="submit">Logout</button>
-            <input name="__RequestVerificationToken" type="hidden" 
-                value="@TokenProvider.XsrfToken">
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <a href="Identity/Account/Register">Register</a>
-        <a href="Identity/Account/Login">Login</a>
-    </NotAuthorized>
-</AuthorizeView>
+@*If you try to use this Razor Component that has Authorize components from component that IS NOT wrapped with <CascadingAuthenticationState>, it won't work,
+    which is the reason why '<component type="typeof(LoginDisplay)" render-mode="ServerPrerendered" />' didn't work in _Layout.cshtml.
+    Hence the reason to wrap it with CascadingAuthenticationState*@
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            <a href="Identity/Account/Manage/Index">
+                Hi, @context.User.Identity.Name!
+            </a>
+            <form action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+                <button class="nav-link btn btn-link" type="submit">Logout</button>
+                <input name="__RequestVerificationToken" type="hidden" 
+                    value="@TokenProvider.XsrfToken">
+            </form>
+        </Authorized>
+        <NotAuthorized>
+            <a href="Identity/Account/Register">Register</a>
+            <a href="Identity/Account/Login">Login</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>

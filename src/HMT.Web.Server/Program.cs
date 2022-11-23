@@ -1,6 +1,7 @@
 using HMT.Web.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using HMT.Web.Server.Areas.Identity;
+using HMT.Web.Server.Features.WeatherForecasts;
 
 var builder = WebApplication.CreateBuilder(args);
 

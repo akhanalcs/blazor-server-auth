@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using HMT.Web.Server.Areas.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using HMT.Web.Server.Models;
 
 namespace HMT.Web.Server.Data
 {
