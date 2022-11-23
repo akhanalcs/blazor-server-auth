@@ -29,9 +29,9 @@
                 var result = Engine.FindView(ViewContext, "_LoginPartial", 
                     isMainPage: false);
             }
-            @if (true)
+            @if (result.Success)
             {
-                await Html.RenderPartialAsync("_LoginPartial.cshtml");
+                await Html.RenderPartialAsync("_LoginPartial");
             }
             else
             {
