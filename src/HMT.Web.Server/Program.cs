@@ -2,6 +2,7 @@ using HMT.Web.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using HMT.Web.Server.Areas.Identity;
 using HMT.Web.Server.Features.WeatherForecasts;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HMTDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HMTConnection")));
 
-builder.Services.AddDefaultIdentity<HMTUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<HMTDbContext>();
+builder.Services
+.AddDefaultIdentity<HMTUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    // Set Password options here if you'd like:
+    // Make sure you're consistent with Data Annotation rules defined in Areas/Identity/Pages/Account/Register.cshtml.cs file
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
 

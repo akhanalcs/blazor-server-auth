@@ -17,17 +17,22 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<HMTUser> _signInManager;
+        private readonly UserManager<HMTUser> _userManager;
         private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<HMTUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<HMTUser> signInManager, UserManager<HMTUser> userManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
+            var identity = await _userManager.GetUserAsync(User);
+            await _userManager.UpdateSecurityStampAsync(identity);
+
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
