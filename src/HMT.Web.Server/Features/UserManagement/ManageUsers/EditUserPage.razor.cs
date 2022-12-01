@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace HMT.Web.Server.Features.ManageUsers
+namespace HMT.Web.Server.Features.UserManagement.ManageUsers
 {
     public partial class EditUserPage : ComponentBase
     {
@@ -14,14 +14,14 @@ namespace HMT.Web.Server.Features.ManageUsers
         public UserManager<HMTUser> UserManager { get; set; } = default!;
 
         [Inject]
-        public RoleManager<IdentityRole> RoleManager { get; set; } = default!;
+        public RoleManager<HMTRole> RoleManager { get; set; } = default!;
 
         [Inject]
         public NavigationManager Navigation { get; set; } = default!;
 
         public HMTUser User { get; set; } = default!;
 
-        public ICollection<IdentityRole> Roles { get; set; } = new List<IdentityRole>();
+        public ICollection<HMTRole> Roles { get; set; } = new List<HMTRole>();
         public ICollection<string> UserRoles { get; set; } = new List<string>();
 
         protected override async Task OnParametersSetAsync()

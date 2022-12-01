@@ -1,0 +1,52 @@
+﻿@page "/manage/permissions"
+@attribute [HMTAuthorize(Permissions.ViewPermissions | Permissions.ManagePermissions)]
+
+<PageTitle>Manage Permissions</PageTitle>
+
+<h1>Manage Permissions</h1>
+
+<p>This is a page to view or manage permissions.</p>
+
+@if (_vm == null) return;
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Permissions</th>
+            @foreach(var role in _vm.Roles)
+            {
+                <th>@role.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var permission in _vm.AvailablePermissions)
+        {
+            <tr>
+                <th>@permission.ToString()</th>
+                @foreach(var role in _vm.Roles)
+                {
+                    <th>
+                        <HMTAuthorizeView Permissions="@Permissions.ManagePermissions">
+                            <Authorized>
+                                <input 
+                                    type="checkbox" 
+                                    class="form-check-input" 
+                                    checked="@role.Has(permission)" 
+                                    @onchange="(args) => 
+                                        Set(role, permission, (bool)args.Value!)" />
+                            </Authorized>
+                            <NotAuthorized>
+                                <input 
+                                    type="checkbox" 
+                                    class="form-check-input" 
+                                    checked="@role.Has(permission)" 
+                                    disabled="disabled" />
+                            </NotAuthorized>
+                        </HMTAuthorizeView>
+                    </th>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

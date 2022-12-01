@@ -3,7 +3,7 @@ using HMT.Web.Server.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace HMT.Web.Server.Features.ManageUsers
+namespace HMT.Web.Server.Features.UserManagement.ManageUsers
 {
     public partial class ViewUsersPage : ComponentBase
     {

@@ -1,5 +1,5 @@
 ﻿@page "/user/edit/{userId}"
-@attribute [Authorize]
+@attribute [HMTAuthorize(Permissions.ManageUsers)]
 
 <PageTitle>Users - Edit</PageTitle>
 

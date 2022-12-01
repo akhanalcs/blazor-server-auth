@@ -21,6 +21,7 @@ builder.Services
     // Make sure you're consistent with Data Annotation rules defined in Areas/Identity/Pages/Account/Register.cshtml.cs file
     options.Password.RequiredLength = 6;
 })
+.AddRoles<HMTRole>()
 .AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
