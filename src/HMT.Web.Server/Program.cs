@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HMT.Web.Server.Areas.Identity;
 using HMT.Web.Server.Features.WeatherForecasts;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,13 +23,17 @@ builder.Services
     options.Password.RequiredLength = 6;
 })
 .AddRoles<HMTRole>()
-.AddEntityFrameworkStores<HMTDbContext>();
+.AddEntityFrameworkStores<HMTDbContext>()
+.AddClaimsPrincipalFactory<HMTUserClaimsPrincipalFactory>();
 
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddSingleton<DbInitializer>(); // To initialize the database
+builder.Services.AddScoped<DbInitializer>(); // To initialize the database
+
+builder.Services.AddSingleton<IAuthorizationHandler, HMTPermissionAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, HMTAuthorizationPolicyProvider>();
 
 // Services we're adding - end
 
@@ -37,17 +42,17 @@ builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
+// Initialize the Db:
+using var scope = app.Services.CreateAsyncScope();
+var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+await dbInitializer.InitializeAsync();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-
-    // Initialize the Db:
-    using var scope = app.Services.CreateAsyncScope();
-    var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-    await dbInitializer.InitializeAsync();
 }
 
 app.UseHttpsRedirection();

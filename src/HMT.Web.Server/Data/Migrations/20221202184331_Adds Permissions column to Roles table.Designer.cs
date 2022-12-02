@@ -4,6 +4,7 @@ using HMT.Web.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMT.Web.Server.Data.Migrations
 {
     [DbContext(typeof(HMTDbContext))]
-    partial class HMTDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221202184331_Adds Permissions column to Roles table")]
+    partial class AddsPermissionscolumntoRolestable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -31,40 +31,51 @@ namespace HMT.Web.Server.Data
                 await _context.Database.MigrateAsync();
             }
 
-            // Create Admin and Handyman roles
-            await _roleManager.CreateAsync(new HMTRole
-            {
-                Name = AdminRole,
-                NormalizedName = AdminRole.ToUpper(),
-                Permissions = Permissions.All
-            });
-
-            await _roleManager.CreateAsync(new HMTRole
-            {
-                Name = HandyManRole,
-                NormalizedName = HandyManRole.ToUpper(),
-                Permissions = Permissions.ViewCounter | Permissions.ViewWeatherForecast
-            });
-
             // Create Admin user
-            await _userManager.CreateAsync(new HMTUser
-            {
-                UserName = AdminUserName,
-                Email = AdminUserName
-            }, DefaultPassword);
-
             var adminUser = await _userManager.FindByNameAsync(AdminUserName);
-            await _userManager.AddToRoleAsync(adminUser, AdminRole);
-
-            // Create HandyMan user
-            await _userManager.CreateAsync(new HMTUser
+            if (adminUser == null)
             {
-                UserName = HandyManUserName,
-                Email = HandyManUserName
-            }, DefaultPassword);
+                //Create Admin role
+                await _roleManager.CreateAsync(new HMTRole
+                {
+                    Name = AdminRole,
+                    NormalizedName = AdminRole.ToUpper(),
+                    Permissions = Permissions.All
+                });
 
+                // Create Admin user
+                await _userManager.CreateAsync(new HMTUser
+                {
+                    UserName = AdminUserName,
+                    Email = AdminUserName
+                }, DefaultPassword);
+
+                adminUser = await _userManager.FindByNameAsync(AdminUserName);
+                await _userManager.AddToRoleAsync(adminUser, AdminRole);
+            }
+
+            // Create Handyman user
             var handyManUser = await _userManager.FindByNameAsync(HandyManUserName);
-            await _userManager.AddToRoleAsync(handyManUser, HandyManRole);
+            if (handyManUser == null)
+            {
+                // Create Handyman role
+                await _roleManager.CreateAsync(new HMTRole
+                {
+                    Name = HandyManRole,
+                    NormalizedName = HandyManRole.ToUpper(),
+                    Permissions = Permissions.ViewCounter | Permissions.ViewWeatherForecast
+                });
+
+                // Create Handyman user
+                await _userManager.CreateAsync(new HMTUser
+                {
+                    UserName = HandyManUserName,
+                    Email = HandyManUserName
+                }, DefaultPassword);
+
+                handyManUser = await _userManager.FindByNameAsync(HandyManUserName);
+                await _userManager.AddToRoleAsync(handyManUser, HandyManRole);
+            }
         }
     }
 }
