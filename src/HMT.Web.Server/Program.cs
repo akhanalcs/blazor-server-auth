@@ -28,6 +28,7 @@ builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
 
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<DbInitializer>(); // To initialize the database
 
 // Services we're adding - end
 
@@ -42,6 +43,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+
+    // Initialize the Db:
+    using var scope = app.Services.CreateAsyncScope();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+    await dbInitializer.InitializeAsync();
 }
 
 app.UseHttpsRedirection();

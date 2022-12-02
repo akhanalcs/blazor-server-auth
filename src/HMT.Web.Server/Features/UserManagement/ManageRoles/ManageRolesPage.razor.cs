@@ -22,7 +22,7 @@ namespace HMT.Web.Server.Features.UserManagement.ManageRoles
         {
             if (!string.IsNullOrWhiteSpace(newRoleName))
             {
-                var role = new IdentityRole { Name = newRoleName };
+                var role = new HMTRole { Name = newRoleName };
                 await RoleManager.CreateAsync(role);
 
                 Roles.Add(role);
