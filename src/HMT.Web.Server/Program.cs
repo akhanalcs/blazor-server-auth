@@ -16,7 +16,7 @@ builder.Services.AddDbContext<HMTDbContext>(options =>
 builder.Services
 .AddDefaultIdentity<HMTUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
     // Set Password options here if you'd like:
     // Make sure you're consistent with Data Annotation rules defined in Areas/Identity/Pages/Account/Register.cshtml.cs file
     options.Password.RequiredLength = 6;

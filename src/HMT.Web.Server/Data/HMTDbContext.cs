@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using HMT.Web.Server.Areas.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace HMT.Web.Server.Data
 {
-    public class HMTDbContext : IdentityDbContext<HMTUser>
+    // Learnt to use Customized role from here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-7.0
+    // Great article btw - AshK
+    public class HMTDbContext : IdentityDbContext<HMTUser, HMTRole, string>
     {
         public HMTDbContext(DbContextOptions<HMTDbContext> options) : base(options) { }
 
