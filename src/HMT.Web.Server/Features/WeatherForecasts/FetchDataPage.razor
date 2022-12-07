@@ -1,11 +1,12 @@
 ﻿@page "/fetchdata"
-@attribute [HMTAuthorize(Permissions.ViewWeatherForecast)]
+@attribute [Authorize(Roles = "Administrators")]
 
 <PageTitle>Weather forecast</PageTitle>
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
+<p>This is only shown to users with 'Administrators' role.</p>
 
 @if (forecasts == null)
 {

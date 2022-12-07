@@ -23,15 +23,12 @@ builder.Services
     options.Password.RequiredLength = 6;
 })
 .AddRoles<HMTRole>()
-.AddEntityFrameworkStores<HMTDbContext>()
-.AddClaimsPrincipalFactory<HMTUserClaimsPrincipalFactory>();
+.AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<DbInitializer>(); // To initialize the database
 
-builder.Services.AddSingleton<IAuthorizationHandler, HMTPermissionAuthorizationHandler>();
-builder.Services.AddSingleton<IAuthorizationPolicyProvider, HMTAuthorizationPolicyProvider>();
 
 builder.Services.AddRazorPages(options => options.RootDirectory = "/Features"); // Added this to rename Pages to Features
 builder.Services.AddServerSideBlazor();

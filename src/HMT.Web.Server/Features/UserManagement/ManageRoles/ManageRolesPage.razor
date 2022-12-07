@@ -1,5 +1,5 @@
 ﻿@page "/manage/roles"
-@attribute [HMTAuthorize(Permissions.ViewRoles | Permissions.ManageRoles)]
+@attribute [Authorize(Roles = "Administrators")]
 
 <PageTitle>Roles</PageTitle>
 
@@ -24,14 +24,12 @@
                         <input type="text" id="name" class="form-control-plaintext" style="padding-left: 0.75rem" value="@role.Name" />
                     </td>
                     <td>
-                        <HMTAuthorizeView Permissions="@Permissions.ManageRoles">
-                            <button type="button" class="btn btn-secondary" @onclick="() => EditRole(role)">
-                                <span class="oi oi-pencil"></span>
-                            </button>
-                            <button type="button" class="btn btn-secondary" @onclick="() => DeleteRole(role)">
-                                <span class="oi oi-x"></span>
-                            </button>
-                        </HMTAuthorizeView>
+                        <button type="button" class="btn btn-secondary" @onclick="() => EditRole(role)">
+                            <span class="oi oi-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="() => DeleteRole(role)">
+                            <span class="oi oi-x"></span>
+                        </button>
                     </td>
                 </tr>
             }
@@ -42,31 +40,27 @@
                         <input type="text" id="name" class="form-control" @bind="@role.Name" />
                     </td>
                     <td>
-                        <HMTAuthorizeView Permissions="@Permissions.ManageRoles">
-                            <button type="button" class="btn btn-secondary" @onclick="() => UpdateRole()">
-                                <span class="oi oi-check"></span>
-                            </button>
-                            <button type="button" class="btn btn-secondary" @onclick="() => CancelEditRole()">
-                                <span class="oi oi-action-undo"></span>
-                            </button>
-                        </HMTAuthorizeView>
+                        <button type="button" class="btn btn-secondary" @onclick="() => UpdateRole()">
+                            <span class="oi oi-check"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="() => CancelEditRole()">
+                            <span class="oi oi-action-undo"></span>
+                        </button>
                     </td>
                 </tr>
             }
         }
     </tbody>
-    <HMTAuthorizeView Permissions="@Permissions.ManageRoles">
-        <tfoot>
-            <tr>
-                <td>
-                    <input type="text" id="name" class="form-control" placeholder="New Role..." @bind="newRoleName" />
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary" @onclick="AddRole">
-                        <span class="oi oi-plus"></span>
-                    </button>
-                </td>
-            </tr>
-        </tfoot>
-    </HMTAuthorizeView>
+    <tfoot>
+        <tr>
+            <td>
+                <input type="text" id="name" class="form-control" placeholder="New Role..." @bind="newRoleName" />
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" @onclick="AddRole">
+                    <span class="oi oi-plus"></span>
+                </button>
+            </td>
+        </tr>
+    </tfoot>
 </table>

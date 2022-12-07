@@ -1,9 +1,10 @@
 ﻿@page "/counter"
-@attribute [HMTAuthorize(Permissions.ViewCounter)]
+@attribute [Authorize(Roles = $"{RoleNames.Admin}, {RoleNames.HandyMan}")]
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
+<p>This is shown to users with 'HandyMan' OR 'Admin' role.</p>
 
 <p role="status">Current count: @currentCount</p>
 
@@ -14,6 +15,7 @@
 
     private void IncrementCount()
     {
+        var abc = $"{RoleNames.Admin}, {RoleNames.HandyMan}";
         currentCount++;
     }
 }

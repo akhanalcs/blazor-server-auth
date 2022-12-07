@@ -10,9 +10,7 @@ namespace HMT.Web.Server.Data
         private readonly UserManager<HMTUser> _userManager;
         private readonly RoleManager<HMTRole> _roleManager;
 
-        private const string AdminRole = "Administrators";
         private const string AdminUserName = "admin@coolapp";
-        private const string HandyManRole = "HandyMan";
         private const string HandyManUserName = "handyman@coolapp";
 
         private const string DefaultPassword = "Password123!";
@@ -38,9 +36,8 @@ namespace HMT.Web.Server.Data
                 //Create Admin role
                 await _roleManager.CreateAsync(new HMTRole
                 {
-                    Name = AdminRole,
-                    NormalizedName = AdminRole.ToUpper(),
-                    Permissions = Permissions.All
+                    Name = RoleNames.Admin,
+                    NormalizedName = RoleNames.Admin.ToUpper(),
                 });
 
                 // Create Admin user
@@ -51,7 +48,7 @@ namespace HMT.Web.Server.Data
                 }, DefaultPassword);
 
                 adminUser = await _userManager.FindByNameAsync(AdminUserName);
-                await _userManager.AddToRoleAsync(adminUser, AdminRole);
+                await _userManager.AddToRoleAsync(adminUser, RoleNames.Admin);
             }
 
             // Create Handyman user
@@ -61,9 +58,8 @@ namespace HMT.Web.Server.Data
                 // Create Handyman role
                 await _roleManager.CreateAsync(new HMTRole
                 {
-                    Name = HandyManRole,
-                    NormalizedName = HandyManRole.ToUpper(),
-                    Permissions = Permissions.ViewCounter | Permissions.ViewWeatherForecast
+                    Name = RoleNames.HandyMan,
+                    NormalizedName = RoleNames.HandyMan.ToUpper(),
                 });
 
                 // Create Handyman user
@@ -74,7 +70,7 @@ namespace HMT.Web.Server.Data
                 }, DefaultPassword);
 
                 handyManUser = await _userManager.FindByNameAsync(HandyManUserName);
-                await _userManager.AddToRoleAsync(handyManUser, HandyManRole);
+                await _userManager.AddToRoleAsync(handyManUser, RoleNames.HandyMan);
             }
         }
     }

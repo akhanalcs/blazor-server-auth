@@ -1,11 +1,9 @@
 ﻿@page "/user/edit/{userId}"
-@attribute [HMTAuthorize(Permissions.ManageUsers)]
+@attribute [Authorize(Roles = "Administrators")]
 
 <PageTitle>Users - Edit</PageTitle>
 
-<h1>Edit</h1>
-
-<h2>User</h2>
+<h1>Edit User</h1>
 
 @if (User != null)
 {

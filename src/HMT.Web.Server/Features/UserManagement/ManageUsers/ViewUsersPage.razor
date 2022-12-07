@@ -1,6 +1,6 @@
 ﻿@page "/users"
 
-@attribute [HMTAuthorize(Permissions.ViewUsers | Permissions.ManageUsers)]
+@attribute [Authorize(Roles = "Administrators")]
 
 <PageTitle>Manage Users</PageTitle>
 
@@ -21,9 +21,7 @@
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>
-                    <HMTAuthorizeView Permissions="@Permissions.ManageUsers">
-                        <a href="/user/edit/@user.Id">Edit</a>
-                    </HMTAuthorizeView>
+                    <a href="/user/edit/@user.Id">Edit</a>
                 </td>
             </tr>
         }
