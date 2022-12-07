@@ -4,27 +4,16 @@
 
 namespace HMT.Web.Server.Data.Migrations
 {
-    public partial class AddsPermissionscolumntoRolestable : Migration
+    public partial class RemoveRepairOrderTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "RepairOrders");
-
-            migrationBuilder.AddColumn<int>(
-                name: "Permissions",
-                table: "AspNetRoles",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Permissions",
-                table: "AspNetRoles");
-
             migrationBuilder.CreateTable(
                 name: "RepairOrders",
                 columns: table => new

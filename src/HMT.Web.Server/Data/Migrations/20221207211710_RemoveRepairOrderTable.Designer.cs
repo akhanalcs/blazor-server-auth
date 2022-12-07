@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMT.Web.Server.Data.Migrations
 {
     [DbContext(typeof(HMTDbContext))]
-    [Migration("20221202184331_Adds Permissions column to Roles table")]
-    partial class AddsPermissionscolumntoRolestable
+    [Migration("20221207211710_RemoveRepairOrderTable")]
+    partial class RemoveRepairOrderTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,9 +40,6 @@ namespace HMT.Web.Server.Data.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("Permissions")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
