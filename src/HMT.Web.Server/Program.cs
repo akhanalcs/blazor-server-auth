@@ -24,14 +24,15 @@ builder.Services
 .AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
-
 builder.Services.AddSingleton<WeatherForecastService>();
-
-// Services we're adding - end
 
 builder.Services.AddRazorPages(options => options.RootDirectory = "/Features"); // Added this to rename Pages to Features
 builder.Services.AddServerSideBlazor();
+
+// Learned the hard way that this needs to be added after setting up Blazor (i.e. AddRazorPages, AddServerSideBlazor) - AshishK
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
+
+// Services we're adding - end
 
 var app = builder.Build();
 

@@ -1,0 +1,12 @@
+﻿@inject NavigationManager Navigation
+@code {
+    [Parameter]
+    public string ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+            ReturnUrl = "~/" + ReturnUrl;
+            Navigation.NavigateTo("Identity/Account/Login?returnUrl=" + ReturnUrl, true);
+            await base.OnInitializedAsync();
+    }
+}
