@@ -1,22 +1,4 @@
-﻿@*<AuthorizeView>
-    <Authorized>
-        <a href="#">Hello, @context.User.Identity?.Name!</a>
-        <form method="post" action="#">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <a href="#">Register</a>
-        <a href="#">Log in</a>
-    </NotAuthorized>
-</AuthorizeView>*@
-
-@*<span>Hi, User</span>
-<button type="button" class="btn btn-link">Log Out</button>*@
-
-@*Added by Identity Scaffolder*@
-
-@using Microsoft.AspNetCore.Components.Authorization
+﻿@using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
 @inject TokenProvider TokenProvider
 
