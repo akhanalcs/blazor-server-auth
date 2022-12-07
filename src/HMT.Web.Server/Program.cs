@@ -23,6 +23,7 @@ builder.Services
     options.Password.RequiredLength = 6;
 })
 .AddRoles<HMTRole>()
+.AddUserManager<ADUserManager<HMTUser>>()
 .AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();

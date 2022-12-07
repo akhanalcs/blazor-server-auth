@@ -11,9 +11,11 @@ namespace HMT.Web.Server.Data
         private readonly RoleManager<HMTRole> _roleManager;
 
         private const string AdminUserName = "admin@coolapp";
+        private const string Admin2UserName = "MyADUsername"; // Active Directory User
         private const string HandyManUserName = "handyman@coolapp";
 
         private const string DefaultPassword = "Password123!";
+        private const string Admin2Password = "MyADPassword123!"; // Active Directory User Password
 
         public DbInitializer(HMTDbContext context, UserManager<HMTUser> userManager, RoleManager<HMTRole> roleManager)
         {
@@ -49,6 +51,20 @@ namespace HMT.Web.Server.Data
 
                 adminUser = await _userManager.FindByNameAsync(AdminUserName);
                 await _userManager.AddToRoleAsync(adminUser, RoleNames.Admin);
+            }
+
+            // Create Admin2 user
+            var admin2User = await _userManager.FindByNameAsync(Admin2UserName);
+            if (admin2User == null)
+            {
+                // Create Admin2 user
+                await _userManager.CreateAsync(new HMTUser
+                {
+                    UserName = Admin2UserName
+                }, Admin2Password);
+
+                admin2User = await _userManager.FindByNameAsync(Admin2UserName);
+                await _userManager.AddToRoleAsync(admin2User, RoleNames.Admin);
             }
 
             // Create Handyman user

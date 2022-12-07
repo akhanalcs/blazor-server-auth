@@ -22,11 +22,13 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<HMTUser> _signInManager;
+        private readonly UserManager<HMTUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<HMTUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<HMTUser> signInManager, UserManager<HMTUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -36,12 +38,6 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -67,8 +63,7 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            public string UserName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -98,8 +93,6 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             ReturnUrl = returnUrl;
         }
 
@@ -107,13 +100,46 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             if (ModelState.IsValid)
             {
+                // Step 1: Authenticate an user against AD
+                // If YES: Go to next step
+                // If NO: Terminate the process
+                var adLoginResult = ADHelper.ADLogin(Input.UserName, Input.Password);
+                if (!adLoginResult)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
+                // Step 2: Check if the user exists in our Identity Db
+                // If YES: Proceed to SignIn the user
+                // If NO: Either terminate the process OR create this user in our Identity Db and THEN proceed to SignIn the user
+                // I'm going with OR scenario this time
+                var user = await _userManager.FindByNameAsync(Input.UserName);
+                if (user == null)
+                {
+                    var identityResult = await _userManager.CreateAsync(new HMTUser
+                    {
+                        UserName = Input.UserName,
+                    }, Input.Password);
+
+                    if (identityResult != IdentityResult.Success)
+                    {
+                        ModelState.AddModelError(string.Empty, "The user was authenticated against AD successfully, but failed to be inserted into HMT database.");
+                        foreach (IdentityError error in identityResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+
+                        return Page();
+                    }
+                }
+
+                // Step 3: SignIn the user using AD credentials
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
