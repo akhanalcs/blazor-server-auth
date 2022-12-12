@@ -11,17 +11,17 @@ namespace HMT.Web.Server.Features.UserManagement.ManageUsers
         public string UserId { get; set; } = default!;
 
         [Inject]
-        public UserManager<HMTUser> UserManager { get; set; } = default!;
+        public UserManager<ApplicationUser> UserManager { get; set; } = default!;
 
         [Inject]
-        public RoleManager<HMTRole> RoleManager { get; set; } = default!;
+        public RoleManager<ApplicationRole> RoleManager { get; set; } = default!;
 
         [Inject]
         public NavigationManager Navigation { get; set; } = default!;
 
-        public HMTUser User { get; set; } = default!;
+        public ApplicationUser User { get; set; } = default!;
 
-        public ICollection<HMTRole> Roles { get; set; } = new List<HMTRole>();
+        public ICollection<ApplicationRole> Roles { get; set; } = new List<ApplicationRole>();
         public ICollection<string> UserRoles { get; set; } = new List<string>();
 
         protected override async Task OnParametersSetAsync()

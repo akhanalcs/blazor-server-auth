@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HMT.Web.Server.Data.Migrations
 {
-    [DbContext(typeof(HMTDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class HMTDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

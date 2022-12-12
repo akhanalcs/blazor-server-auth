@@ -1,5 +1,5 @@
 ﻿@*Added by Identity Scaffolder*@
-@inject SignInManager<HMTUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

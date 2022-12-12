@@ -8,10 +8,10 @@ namespace HMT.Web.Server.Features.UserManagement.ManageRoles
     public partial class ManageRolesPage : ComponentBase
     {
         [Inject]
-        public RoleManager<HMTRole> RoleManager { get; set; } = default!;
-        public ICollection<HMTRole> Roles { get; set; } = new List<HMTRole>();
+        public RoleManager<ApplicationRole> RoleManager { get; set; } = default!;
+        public ICollection<ApplicationRole> Roles { get; set; } = new List<ApplicationRole>();
         private string newRoleName = string.Empty;
-        private HMTRole? roleToEdit;
+        private ApplicationRole? roleToEdit;
 
         protected override async Task OnInitializedAsync()
         {
@@ -22,7 +22,7 @@ namespace HMT.Web.Server.Features.UserManagement.ManageRoles
         {
             if (!string.IsNullOrWhiteSpace(newRoleName))
             {
-                var role = new HMTRole { Name = newRoleName };
+                var role = new ApplicationRole { Name = newRoleName };
                 await RoleManager.CreateAsync(role);
 
                 Roles.Add(role);
@@ -31,7 +31,7 @@ namespace HMT.Web.Server.Features.UserManagement.ManageRoles
             newRoleName = string.Empty;
         }
 
-        private void EditRole(HMTRole role)
+        private void EditRole(ApplicationRole role)
         {
             roleToEdit = role;
         }
@@ -52,7 +52,7 @@ namespace HMT.Web.Server.Features.UserManagement.ManageRoles
             roleToEdit = null;
         }
 
-        private async Task DeleteRole(HMTRole roleToDelete)
+        private async Task DeleteRole(ApplicationRole roleToDelete)
         {
             var role = await RoleManager.FindByIdAsync(roleToDelete.Id);
             if (role == null) return;

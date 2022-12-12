@@ -8,8 +8,8 @@ namespace HMT.Web.Server.Features.UserManagement.ManageUsers
     public partial class ViewUsersPage : ComponentBase
     {
         [Inject]
-        public UserManager<HMTUser> UserManager { get; set; } = default!;
-        public ICollection<HMTUser> Users { get; set; } = new List<HMTUser>();
+        public UserManager<ApplicationUser> UserManager { get; set; } = default!;
+        public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
 
         protected override async Task OnInitializedAsync()
         {

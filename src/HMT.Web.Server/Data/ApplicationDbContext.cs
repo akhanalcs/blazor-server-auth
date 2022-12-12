@@ -12,9 +12,9 @@ namespace HMT.Web.Server.Data
 {
     // Learnt to use Customized role from here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-7.0
     // Great article btw - AshK
-    public class HMTDbContext : IdentityDbContext<HMTUser, HMTRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
-        public HMTDbContext(DbContextOptions<HMTDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

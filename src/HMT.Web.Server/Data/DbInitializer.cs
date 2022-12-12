@@ -6,9 +6,9 @@ namespace HMT.Web.Server.Data
 {
     public class DbInitializer
     {
-        private readonly HMTDbContext _context;
-        private readonly UserManager<HMTUser> _userManager;
-        private readonly RoleManager<HMTRole> _roleManager;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
         private const string AdminUserName = "admin@coolapp";
         private const string Admin2UserName = "MyADUsername"; // Active Directory User
@@ -17,7 +17,7 @@ namespace HMT.Web.Server.Data
         private const string DefaultPassword = "Password123!";
         private const string Admin2Password = "MyADPassword123!"; // Active Directory User Password
 
-        public DbInitializer(HMTDbContext context, UserManager<HMTUser> userManager, RoleManager<HMTRole> roleManager)
+        public DbInitializer(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -36,14 +36,14 @@ namespace HMT.Web.Server.Data
             if (adminUser == null)
             {
                 //Create Admin role
-                await _roleManager.CreateAsync(new HMTRole
+                await _roleManager.CreateAsync(new ApplicationRole
                 {
                     Name = RoleNames.Admin,
                     NormalizedName = RoleNames.Admin.ToUpper(),
                 });
 
                 // Create Admin user
-                await _userManager.CreateAsync(new HMTUser
+                await _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = AdminUserName,
                     Email = AdminUserName
@@ -58,7 +58,7 @@ namespace HMT.Web.Server.Data
             if (admin2User == null)
             {
                 // Create Admin2 user
-                await _userManager.CreateAsync(new HMTUser
+                await _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = Admin2UserName
                 }, Admin2Password);
@@ -72,14 +72,14 @@ namespace HMT.Web.Server.Data
             if (handyManUser == null)
             {
                 // Create Handyman role
-                await _roleManager.CreateAsync(new HMTRole
+                await _roleManager.CreateAsync(new ApplicationRole
                 {
                     Name = RoleNames.HandyMan,
                     NormalizedName = RoleNames.HandyMan.ToUpper(),
                 });
 
                 // Create Handyman user
-                await _userManager.CreateAsync(new HMTUser
+                await _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = HandyManUserName,
                     Email = HandyManUserName

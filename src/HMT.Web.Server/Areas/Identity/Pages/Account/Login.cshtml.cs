@@ -21,11 +21,11 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<HMTUser> _signInManager;
-        private readonly UserManager<HMTUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<HMTUser> signInManager, UserManager<HMTUser> userManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -119,7 +119,7 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByNameAsync(Input.UserName);
                 if (user == null)
                 {
-                    var identityResult = await _userManager.CreateAsync(new HMTUser
+                    var identityResult = await _userManager.CreateAsync(new ApplicationUser
                     {
                         UserName = Input.UserName,
                     }, Input.Password);

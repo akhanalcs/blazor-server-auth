@@ -16,11 +16,11 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly SignInManager<HMTUser> _signInManager;
-        private readonly UserManager<HMTUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<HMTUser> signInManager, UserManager<HMTUser> userManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LogoutModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;

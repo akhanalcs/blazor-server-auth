@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HMT.Web.Server.Areas.Identity
 {
-    public class HMTUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
     }
 }

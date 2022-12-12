@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HMT.Web.Server.Data.Migrations
 {
-    [DbContext(typeof(HMTDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20221110214843_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {

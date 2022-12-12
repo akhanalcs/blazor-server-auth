@@ -2,7 +2,7 @@
 
 namespace HMT.Web.Server.Areas.Identity
 {
-    public class HMTRole : IdentityRole
+    public class ApplicationRole : IdentityRole
     {
     }
 }

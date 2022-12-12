@@ -11,20 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Services we're adding - start
 
-builder.Services.AddDbContext<HMTDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HMTConnection")));
 
 builder.Services
-.AddDefaultIdentity<HMTUser>(options =>
+.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
     // Set Password options here if you'd like:
     // Make sure you're consistent with Data Annotation rules defined in Areas/Identity/Pages/Account/Register.cshtml.cs file
     options.Password.RequiredLength = 6;
 })
-.AddRoles<HMTRole>()
-.AddUserManager<ADUserManager<HMTUser>>()
-.AddEntityFrameworkStores<HMTDbContext>();
+.AddRoles<ApplicationRole>()
+.AddUserManager<ADUserManager<ApplicationUser>>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddSingleton<WeatherForecastService>();
@@ -35,7 +35,7 @@ builder.Services.AddRazorPages(options => options.RootDirectory = "/Features"); 
 builder.Services.AddServerSideBlazor();
 
 // Learned the hard way that this needs to be added after setting up Blazor (i.e. AddRazorPages, AddServerSideBlazor) - AshishK
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 
 // Services we're adding - end
 
