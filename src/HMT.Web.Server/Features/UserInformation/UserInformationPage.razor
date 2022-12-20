@@ -1,0 +1,66 @@
+﻿@page "/userinfo"
+
+<h1>User Info Demo!</h1>
+
+@if (currentUserInfo != null && !string.IsNullOrEmpty(currentUserInfo.UserName))
+{
+    <div class="row col-md-6">
+        <h3>Current User</h3>
+        <UserInformation UserInfo="currentUserInfo" />
+    </div>
+}
+else
+{
+    <EditForm Model="@userName" OnValidSubmit="@HandleValidUserNameSubmit">
+        <div class="row col-md-6">
+            <div class="mb-3">
+                <label for="userName" class="form-label">User name</label>
+                <InputText id="userName" class="form-control" @bind-Value="userName" />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+
+    @if (queriedUserInfo != null && !string.IsNullOrEmpty(queriedUserInfo.UserName))
+    {
+        <br />
+
+        <div class="row col-md-6">
+            <h3>Queried User</h3>
+            <UserInformation UserInfo="queriedUserInfo" />
+        </div>
+    }
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; } = null!;
+
+    private UserInfo? queriedUserInfo = null;
+    private UserInfo? currentUserInfo = null;
+    private string userName = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        if (authState == null || authState.User == null || authState.User.Identity == null) return;
+
+        var isAuthenticated = authState.User.Identity.IsAuthenticated;
+        if (isAuthenticated)
+        {
+            var userName = authState.User.Identity.Name;
+            currentUserInfo = ADHelper.GetADUserInfo(userName!);
+        }
+    }
+
+    private void HandleValidUserNameSubmit()
+    {
+        if (!string.IsNullOrEmpty(userName))
+        {
+            queriedUserInfo = ADHelper.GetADUserInfo(userName);
+            userName = string.Empty;
+        }
+    }
+}

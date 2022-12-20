@@ -1,0 +1,21 @@
+﻿@if (UserInfo != null)
+{
+    <div class="mb-3">
+        <ul class="list-group">
+            <li class="list-group-item"><b>@nameof(UserInfo.UserName):</b> @UserInfo.UserName</li>
+            <li class="list-group-item"><b>@nameof(UserInfo.FirstName):</b> @UserInfo.FirstName</li>
+            <li class="list-group-item"><b>@nameof(UserInfo.LastName):</b> @UserInfo.LastName</li>
+            <li class="list-group-item"><b>@nameof(UserInfo.CommaSeparatedGroupNames):</b> @UserInfo.CommaSeparatedGroupNames</li>
+            <li class="list-group-item"><b>@nameof(UserInfo.DepartmentName):</b> @UserInfo.DepartmentName</li>
+        </ul>
+    </div>
+}
+else
+{
+    <p>No user information available.</p>
+}
+
+@code {
+    [Parameter]
+    public UserInfo? UserInfo { get; set; }
+}
