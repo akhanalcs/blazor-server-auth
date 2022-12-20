@@ -1,4 +1,4 @@
-﻿using HMT.Web.Server.Features.UserInformation;
+﻿using HMT.Web.Server.Features.UserInformation.ADUserInfo;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 

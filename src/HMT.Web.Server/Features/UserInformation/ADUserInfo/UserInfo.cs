@@ -1,4 +1,4 @@
-﻿namespace HMT.Web.Server.Features.UserInformation
+﻿namespace HMT.Web.Server.Features.UserInformation.ADUserInfo
 {
     public class UserInfo
     {
@@ -13,7 +13,7 @@
             get => string.Join(",", GroupNames);
         }
 
-        // Noticed that this property comes with lots of whitespaces, so decided to trim them. For eg: "Grp1         "
+        // Noticed that this property comes with lots of whitespaces, so decided to trim them. For eg: "Dept1         "
         public string? DepartmentName
         {
             get => departmentName;
