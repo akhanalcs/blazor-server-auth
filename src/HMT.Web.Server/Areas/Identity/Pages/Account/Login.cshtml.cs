@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace HMT.Web.Server.Areas.Identity.Pages.Account
 {
@@ -116,6 +117,8 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    // Access it from Areas/Identity/Components/TakeABreak.razor
+                    HttpContext.User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim("NewClaim", "Emp123") }));
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

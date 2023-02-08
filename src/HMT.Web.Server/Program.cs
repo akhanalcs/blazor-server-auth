@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Services we're adding - start
 
-builder.Services.AddDbContext<HMTDbContext>(options =>
+builder.Services.AddDbContextFactory<HMTDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HMTConnection")));
 
 builder.Services
