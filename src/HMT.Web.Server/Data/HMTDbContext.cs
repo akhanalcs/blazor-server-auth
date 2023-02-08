@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HMT.Web.Server.Data
 {
-    public class HMTDbContext : IdentityDbContext<HMTUser>
+    public class HMTDbContext : IdentityDbContext<HMTUser, HMTRole, string>
     {
         public HMTDbContext(DbContextOptions<HMTDbContext> options) : base(options) { }
 

@@ -16,15 +16,17 @@ builder.Services.AddDbContextFactory<HMTDbContext>(options =>
 builder.Services
 .AddDefaultIdentity<HMTUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
     // Set Password options here if you'd like:
     // Make sure you're consistent with Data Annotation rules defined in Areas/Identity/Pages/Account/Register.cshtml.cs file
     options.Password.RequiredLength = 6;
 })
+.AddRoles<HMTRole>()
 .AddEntityFrameworkStores<HMTDbContext>();
 
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<DbInitializer>(); // To initialize the database
 
 builder.Services.AddRazorPages(options => options.RootDirectory = "/Features"); // Added this to rename Pages to Features
 builder.Services.AddServerSideBlazor();
@@ -35,6 +37,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 // Services we're adding - end
 
 var app = builder.Build();
+
+// Initialize the Db:
+using var scope = app.Services.CreateAsyncScope();
+var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+await dbInitializer.InitializeAsync();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

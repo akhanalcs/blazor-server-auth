@@ -49,20 +49,6 @@ namespace HMT.Web.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RepairOrders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SomeUniqueThingInDb = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RepairOrders", x => x.OrderId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -224,9 +210,6 @@ namespace HMT.Web.Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "RepairOrders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
