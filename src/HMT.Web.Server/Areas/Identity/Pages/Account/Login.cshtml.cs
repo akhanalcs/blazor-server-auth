@@ -112,30 +112,56 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                // This check ensures that the user is in our Identity database (AspNetUsers table)
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
+                if (user == null)
                 {
-                    // Access it from Areas/Identity/Components/TakeABreak.razor
-                    HttpContext.User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim("NewClaim", "Emp123") }));
+                    ModelState.AddModelError(string.Empty, "User doesn't exist.");
+                    return Page();
+                }
+
+                var isValid = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
+                if (isValid)
+                {
+                    // Access 'EmployeeId' from Areas/Identity/Components/TakeABreak.razor
+                    // For eg: Emp123 is adLookupResult.EmployeeId that I retrieved from Active Directory in Step 1.
+                    var customClaims = new[] { new Claim("EmployeeId", "Emp123") };
+                    await _signInManager.SignInWithClaimsAsync(user, Input.RememberMe, customClaims);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
+
+                // This commented section came with the default template. Not required anymore.
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                //if (result.Succeeded)
+                //{
+                //    // Access it from Areas/Identity/Components/TakeABreak.razor
+                //    HttpContext.User.AddIdentity(new ClaimsIdentity(new List<Claim> { new Claim("NewClaim", "Emp123") }));
+                //    _logger.LogInformation("User logged in.");
+                //    return LocalRedirect(returnUrl);
+                //}
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                //}
+                //if (result.IsLockedOut)
+                //{
+                //    _logger.LogWarning("User account locked out.");
+                //    return RedirectToPage("./Lockout");
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                //    return Page();
+                //}
             }
 
             // If we got this far, something failed, redisplay form

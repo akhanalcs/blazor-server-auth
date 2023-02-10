@@ -12,7 +12,7 @@
 
     private async Task ClockOutForABreakAsync()
     {
-        var empId = (await authenticationStateTask).User.FindFirstValue("NewClaim");
+        var empId = (await authenticationStateTask).User.FindFirstValue("EmployeeId");
 
         //Do 'Taking Break' stuffs
         //var empTimeId = await ProtectedSessionStore.GetAsync<string>($"{user.Identity.Name}-EmpTimeId");
