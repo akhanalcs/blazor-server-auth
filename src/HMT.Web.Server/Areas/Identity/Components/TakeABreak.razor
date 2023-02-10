@@ -1,10 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using System.Security.Claims
 @inject ProtectedSessionStorage ProtectedSessionStore
-
 @inject IDbContextFactory<HMTDbContext> DbContextFactory
-
-@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 
 <a href="" @onclick="ClockOutForABreakAsync"><span class="oi oi-clock">Break</span></a>
 
@@ -16,10 +14,12 @@
     {
         var empId = (await authenticationStateTask).User.FindFirstValue("NewClaim");
 
-
+        //Do 'Taking Break' stuffs
         //var empTimeId = await ProtectedSessionStore.GetAsync<string>($"{user.Identity.Name}-EmpTimeId");
         //using var dbContext = DbContextFactory.CreateDbContext();
         //dbContext.Database.ExecuteSqlInterpolated($"EXECUTE dbo.SomeSPName {empId}");
-        //Navigation.NavigateTo("Identity/Account/Logout?returnUrl=%2F", true);
+
+        // After you're done with the 'Taking Break' stuffs, log the user out
+        await JSRuntime.InvokeVoidAsync("app.ClickLogOutButton"); // This function is in wwwroot/scripts/app.js
     }
 }
