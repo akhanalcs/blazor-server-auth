@@ -16,7 +16,7 @@ I just added Identity to it following directions from [here](https://learn.micro
 ## Branch: feature/AddUserManagementPages
 This branch builds up on `feature/LayoutWithIdentityPages` branch and adds pages to manage users, roles and permissions.
 This follows the concepts explained by Jason Taylor in [his video](https://youtu.be/OW5wBERdhQU).
-Just launch the app. The credentilas are in the `Data/DbInitializer.cs` file. Use them to login as admin and you can see these pages:
+Just launch the app. The credentials are in the `Data/DbInitializer.cs` file. Use them to login as admin and you can see these pages:
 <img width="1857" alt="image" src="https://user-images.githubusercontent.com/30603497/217652210-5e393041-b3df-4489-b6bc-478acde7ac38.png">
 <img width="1863" alt="image" src="https://user-images.githubusercontent.com/30603497/217652296-60a8d732-a74e-4561-8ae7-6b2fac9749b5.png">
 <img width="1861" alt="image" src="https://user-images.githubusercontent.com/30603497/217652374-72ea73cf-4d2f-4ae4-886e-0c1c34c714df.png">
