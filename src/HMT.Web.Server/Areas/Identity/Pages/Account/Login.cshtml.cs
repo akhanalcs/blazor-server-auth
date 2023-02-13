@@ -120,8 +120,8 @@ namespace HMT.Web.Server.Areas.Identity.Pages.Account
                     return Page();
                 }
 
-                var isValid = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
-                if (isValid)
+                var result = await _signInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
+                if (result.Succeeded)
                 {
                     // Access 'EmployeeId' from Areas/Identity/Components/TakeABreak.razor
                     // For eg: Emp123 is adLookupResult.EmployeeId that I retrieved from Active Directory in Step 1.
