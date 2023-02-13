@@ -16,6 +16,6 @@ I just added Identity to it following directions from [here](https://learn.micro
 ## Branch: feature/LayoutWithIdentityPages
 This is the end result of me following the documentation and figuring out the rest of the missing pieces in the documentation. 
 The missing pieces are:
-  1. [How to fit the Identity Razor Pages in the Blazor app to give consistent look and feel when the user navigates between Razor Pages (coming from Identity Razor Package) and Razor Components.](https://github.com/dotnet/aspnetcore/issues/45174#issuecomment-1325657322)
+  1. [How to fit the Identity Razor Pages in the Blazor app to give consistent look and feel when the user navigates between Razor Pages (coming from Identity Nuget Package) and Razor Components.](https://github.com/dotnet/aspnetcore/issues/45174#issuecomment-1325657322)
   2. [How to implement Revalidation.](https://github.com/dotnet/aspnetcore/issues/45174#issuecomment-1332517355)
   3. [How to implement `RedirectToLogin` so users are directed to Login page if they aren't authenticated and need to access authenticated page.](https://github.com/dotnet/aspnetcore/issues/45174#issuecomment-1346978198)
