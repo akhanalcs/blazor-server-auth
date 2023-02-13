@@ -14,7 +14,7 @@ I just added Identity to it following directions from [here](https://learn.micro
    For eg: Email -> handyman@coolapp, Password -> Password123!
    
 ## Branch: feature/AddADAuthentication
-This branch build up on `feature/AddUserManagementPages` branch and adds capability to do Authentication using Local Active Directory.
+This branch builds up on `feature/AddUserManagementPages` branch and adds capability to do Authentication using Local Active Directory.
 
 This answer explains what I'm doing here: https://stackoverflow.com/a/74734478/8644294
 
