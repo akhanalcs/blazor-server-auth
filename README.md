@@ -24,7 +24,7 @@ The missing pieces are:
 ## Branch: feature/AddUserManagementPages
 This branch builds up on the previous branch and adds pages to manage users, roles and permissions.
 This follows the concepts explained by Jason Taylor in [his video](https://youtu.be/OW5wBERdhQU).
-Just launch the app. The credentilas are in the `Data/DbInitializer.cs` file. Use them to login as admin and you can see these pages:
+Just launch the app. The credentials are in the `Data/DbInitializer.cs` file. Use them to login as admin and you can see these pages:
 <img width="1857" alt="image" src="https://user-images.githubusercontent.com/30603497/217652210-5e393041-b3df-4489-b6bc-478acde7ac38.png">
 <img width="1863" alt="image" src="https://user-images.githubusercontent.com/30603497/217652296-60a8d732-a74e-4561-8ae7-6b2fac9749b5.png">
 <img width="1861" alt="image" src="https://user-images.githubusercontent.com/30603497/217652374-72ea73cf-4d2f-4ae4-886e-0c1c34c714df.png">
@@ -32,10 +32,12 @@ Just launch the app. The credentilas are in the `Data/DbInitializer.cs` file. Us
 I'll write more about how I implemented it (step-by-step) at a later date when I get some time.
 
 ## Branch: feature/AddADAuthentication
-This branch build up on the previous branch and adds capability to do Authentication using Local Active Directory.
+This branch builds up on the previous branch and adds capability to do Authentication using Local Active Directory.
 
 This answer explains what I'm doing here: https://stackoverflow.com/a/74734478/8644294
 
 ## Branch: feature/AddClaimsDuringLogin
-This branch builds up on _feature/LayoutWithIdentityPages_ to show how to add Claims during Login (in [`Login.cshtml.cs`](https://github.com/affableashish/blazor-server-auth/blob/bab11ae89e3e3f1120b523f8688ca91c3ff71dff/src/HMT.Web.Server/Areas/Identity/Pages/Account/Login.cshtml.cs#L121) file) and access those claims from [Razor Component](https://github.com/affableashish/blazor-server-auth/blob/bab11ae89e3e3f1120b523f8688ca91c3ff71dff/src/HMT.Web.Server/Areas/Identity/Components/TakeABreak.razor#L17).
-It doesn't work currently, so it's a WIP.
+This branch builds up on _feature/LayoutWithIdentityPages_ to show how to add Claims during Login (in [`Login.cshtml.cs`](https://github.com/affableashish/blazor-server-auth/blob/07781afdb20689548ba6e7e04b8eb943c810ebc6/src/HMT.Web.Server/Areas/Identity/Pages/Account/Login.cshtml.cs#L129) file) and access those claims from [Razor Component](https://github.com/affableashish/blazor-server-auth/blob/07781afdb20689548ba6e7e04b8eb943c810ebc6/src/HMT.Web.Server/Areas/Identity/Components/TakeABreak.razor#L15).
+
+When you launch the app, login and click 'Break' and add a breakpoint in [this line](https://github.com/affableashish/blazor-server-auth/blob/07781afdb20689548ba6e7e04b8eb943c810ebc6/src/HMT.Web.Server/Areas/Identity/Components/TakeABreak.razor#L15), you should get the new claim set in [this line](https://github.com/affableashish/blazor-server-auth/blob/07781afdb20689548ba6e7e04b8eb943c810ebc6/src/HMT.Web.Server/Areas/Identity/Pages/Account/Login.cshtml.cs#L129).
+<img width="1856" alt="image" src="https://user-images.githubusercontent.com/30603497/217914365-10413758-780f-4c46-94a3-1783f2ade15a.png">
