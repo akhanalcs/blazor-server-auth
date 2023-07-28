@@ -34,6 +34,9 @@ builder.Services.AddServerSideBlazor();
 // Learned the hard way that this needs to be added after setting up Blazor (i.e. AddRazorPages, AddServerSideBlazor) - AshishK
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<HMTUser>>();
 
+// To ensure custom claims are added to new identity when principal is refreshed.
+builder.Services.ConfigureOptions<ConfigureSecurityStampOptions>();
+
 // Services we're adding - end
 
 var app = builder.Build();
