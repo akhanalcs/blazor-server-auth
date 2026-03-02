@@ -5,6 +5,7 @@ using HMT.Web.Server.Features.WeatherForecasts;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
+//some comment
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
